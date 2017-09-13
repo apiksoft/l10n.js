@@ -71,6 +71,7 @@
 				req.onerror = function (e) {
 					reject("Error for request " + uri + " failed! (possibly cross-domain issue) " + req.statusText);
 				};
+				
 				req.ontimeout = function () {
 					reject("The request for " + uri + " timed out.");
 				};
@@ -84,6 +85,7 @@
 				if (typeof data === string_type) {
 					// load(request_JSON(data));
 					request_JSON(data).then(function(res){
+						console.log(data, res);
 						if(res !== undefined) load(res);
 					});
 				} else if (data === FALSE) {
@@ -111,6 +113,7 @@
 								if (String_ctr[$locale][$to_lowercase]().indexOf(locale) === 0) {
 									// localization = request_JSON(localization);
 									request_JSON(localization).then(function(res){
+										console.log(localization, res);
 										if(res !== undefined) localization = res;
 									});
 								} else {
@@ -147,6 +150,7 @@
 				localization = {};
 				//localization[locale] = request_JSON(queue[i]);
 				request_JSON(queue[i]).then(function(res){
+					console.log(queue[i], res);
 					if(res !== undefined) localization[locale] = res;
 				});
 				load(localization);
