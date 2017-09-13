@@ -160,9 +160,10 @@
 					console.log(queue[i], res);
 					if(res !== undefined) localization[locale] = res;
 					load(localization);
-					continue;
+					return;
 				});
-				load(localization);
+				continue;
+				// load(localization);
 			}
 
 			delete load_queues[locale];
