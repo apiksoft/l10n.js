@@ -115,6 +115,12 @@
 									request_JSON(localization).then(function(res){
 										console.log(localization, res);
 										if(res !== undefined) localization = res;
+										for (message in localization) {
+											if (has_own_prop.call(localization, message)) {
+												localizations[locale][message] = localization[message];
+											}
+										}
+										continue;
 									});
 								} else {
 									// queue loading locale if not needed
@@ -152,6 +158,8 @@
 				request_JSON(queue[i]).then(function(res){
 					console.log(queue[i], res);
 					if(res !== undefined) localization[locale] = res;
+					load(localization);
+					continue;
 				});
 				load(localization);
 			}
