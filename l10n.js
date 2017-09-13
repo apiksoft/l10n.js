@@ -70,6 +70,10 @@
 			setTimeout(function(){
 				console.log(data);
 				console.log(thisData);
+				if(data != thisData){
+					data = thisData;
+				}
+				console.log(data);
 			}, req.timeout);
 
 			req.onerror = function (e) {
