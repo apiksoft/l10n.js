@@ -50,63 +50,42 @@
 			return -1;
 		}
 		, request_JSON = function (uri) {
-			var req = new XHR(),
-				data = {};
+			return new Promise(function (resolve, reject) {
+				var req = new XHR(),
+					data = {};
 
-			// sadly, this has to be non-blocking, thus does not allow for a graceful degrading API
-			req.open("GET", uri, TRUE);
-			req.timeout = 5000;
-			var thisData = data;
-			req.onload = function (e) {
-				if (req.readyState === 4) {
-					if (req.status === 200) {
-						thisData = JSON.parse(req.responseText);
-					} else {
-						console.error(req.statusText);
+				// sadly, this has to be non-blocking, thus does not allow for a gracefully degrading API
+				req.open("GET", uri, TRUE);
+				req.timeout = 5000;
+				var thisData = data;
+				req.onload = function (e) {
+					if (req.readyState === 4) {
+						if (req.status === 200) {
+							resolve(JSON.parse(req.responseText));
+						} else {
+							reject(req.statusText);
+						}
 					}
-				}
-			};
+				};
 
-			setTimeout(function(){
-				console.log(data);
-				console.log(thisData);
-				if(data != thisData){
-					data = thisData;
-				}
-				console.log(data);
-			}, req.timeout);
+				req.onerror = function (e) {
+					reject("Error for request " + uri + " failed! (possibly cross-domain issue) " + req.statusText);
+				};
+				req.ontimeout = function () {
+					reject("The request for " + uri + " timed out.");
+				};
 
-			req.onerror = function (e) {
-				console.error("Error for request " + uri + " (possibly cross-domain issue)" + req.statusText);
-			};
-			req.ontimeout = function () {
-				console.error("The request for " + uri + " timed out.");
-			};
-
-			req.send(null);
-
-			// Status codes can be inconsistent across browsers so we simply try to parse
-			// the response text and catch any errors. This deals with failed requests as
-			// well as malformed json files.
-			// try {
-			// 	data = JSON.parse(req.responseText);
-			// } catch (e) {
-			// 	// warn about error without stopping execution
-			// 	setTimeout(function () {
-			// 		// Error messages are not localized as not to cause an infinite loop
-			// 		var l10n_err = new Error("Unable to load localization data: " + uri);
-			// 		l10n_err.name = "Localization Error";
-			// 		throw l10n_err;
-			// 	}, 0);
-			// }
-
-			return data;
+				req.send(null);
+			});
 		}
 		, load = String_ctr[$to_locale_string] = function (data) {
 			// don't handle function.toLocaleString(indentationAmount:Number)
 			if (arguments.length > 0 && typeof data !== "number") {
 				if (typeof data === string_type) {
-					load(request_JSON(data));
+					// load(request_JSON(data));
+					request_JSON(data).then(function(res){
+						if(res !== undefined) load(res);
+					});
 				} else if (data === FALSE) {
 					// reset all localizations
 					localizations = {};
@@ -130,7 +109,10 @@
 							// URL specified
 							if (typeof localization === string_type) {
 								if (String_ctr[$locale][$to_lowercase]().indexOf(locale) === 0) {
-									localization = request_JSON(localization);
+									// localization = request_JSON(localization);
+									request_JSON(localization).then(function(res){
+										if(res !== undefined) localization = res;
+									});
 								} else {
 									// queue loading locale if not needed
 									if (!(locale in load_queues)) {
@@ -163,7 +145,10 @@
 
 			for (; i < len; i++) {
 				localization = {};
-				localization[locale] = request_JSON(queue[i]);
+				//localization[locale] = request_JSON(queue[i]);
+				request_JSON(queue[i]).then(function(res){
+					if(res !== undefined) localization[locale] = res;
+				});
 				load(localization);
 			}
 
