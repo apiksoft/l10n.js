@@ -60,6 +60,7 @@
 				if (req.readyState === 4) {
 					if (req.status === 200) {
 						console.log(req.responseText);
+						data = JSON.parse(req.responseText);
 					} else {
 						console.error(req.statusText);
 					}
@@ -74,17 +75,17 @@
 			// Status codes can be inconsistent across browsers so we simply try to parse
 			// the response text and catch any errors. This deals with failed requests as
 			// well as malformed json files.
-			try {
-				data = JSON.parse(req.responseText);
-			} catch (e) {
-				// warn about error without stopping execution
-				setTimeout(function () {
-					// Error messages are not localized as not to cause an infinite loop
-					var l10n_err = new Error("Unable to load localization data: " + uri);
-					l10n_err.name = "Localization Error";
-					throw l10n_err;
-				}, 0);
-			}
+			// try {
+			// 	data = JSON.parse(req.responseText);
+			// } catch (e) {
+			// 	// warn about error without stopping execution
+			// 	setTimeout(function () {
+			// 		// Error messages are not localized as not to cause an infinite loop
+			// 		var l10n_err = new Error("Unable to load localization data: " + uri);
+			// 		l10n_err.name = "Localization Error";
+			// 		throw l10n_err;
+			// 	}, 0);
+			// }
 
 			return data;
 		}
