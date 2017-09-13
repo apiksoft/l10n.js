@@ -67,11 +67,11 @@
 					}
 				}
 			};
-			// req.onerror = function (e) {
-			// 	console.log(req);
-			// 	console.log(req.responseText);
-			// 	console.error(req.statusText);
-			// };
+			req.onerror = function (e) {
+				console.log(req);
+				console.log(req.responseText);
+				console.error(req.statusText);
+			};
 			req.ontimeout = function () {
 				console.error("The request for " + uri + " timed out.");
 			};
