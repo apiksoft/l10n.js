@@ -60,18 +60,18 @@
 				if (req.readyState === 4) {
 					if (req.status === 200) {
 						console.log(req.responseText);
-						console.log(xhr.responseURL);
+						console.log(req.responseURL);
 						data = JSON.parse(req.responseText);
 					} else {
 						console.error(req.statusText);
 					}
 				}
 			};
-			req.onerror = function (e) {
-				console.log(req);
-				console.log(req.responseText);
-				console.error(req.statusText);
-			};
+			// req.onerror = function (e) {
+			// 	console.log(req);
+			// 	console.log(req.responseText);
+			// 	console.error(req.statusText);
+			// };
 			req.ontimeout = function () {
 				console.error("The request for " + uri + " timed out.");
 			};
