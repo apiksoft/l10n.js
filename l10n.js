@@ -120,8 +120,9 @@
 												localizations[locale][message] = localization[message];
 											}
 										}
-										continue;
+										return;
 									});
+									continue;
 								} else {
 									// queue loading locale if not needed
 									if (!(locale in load_queues)) {
