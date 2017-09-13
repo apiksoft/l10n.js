@@ -55,7 +55,7 @@
 
 			// sadly, this has to be non-blocking, thus does not allow for a graceful degrading API
 			req.open("GET", uri, TRUE);
-			req.timeout = 500;
+			req.timeout = 5000;
 			req.onload = function (e) {
 				if (req.readyState === 4) {
 					if (req.status === 200) {
