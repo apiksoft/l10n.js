@@ -1,6 +1,6 @@
 {
   "name": "l10n-async",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "l10n.js with non-blocking XHR call",
   "main": "l10n.js",
   "directories": {
