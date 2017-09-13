@@ -53,8 +53,8 @@ var
 	var req  = new XHR(),
 		data = {};
 	
-	// sadly, this has to be blocking to allow for a graceful degrading API
-	req.open("GET", uri, FALSE);
+	// sadly, this has to be non-blocking, thus does not allow for a graceful degrading API
+	req.open("GET", uri, TRUE);
 	req.send(null);
 	
 	// Status codes can be inconsistent across browsers so we simply try to parse

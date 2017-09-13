@@ -1,0 +1,28 @@
+{
+  "name": "l10n-async",
+  "version": "1.0.0",
+  "description": "l10n.js with non-blocking XHR call",
+  "main": "l10n.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/apiksoft/l10n.js.git"
+  },
+  "keywords": [
+    "l10n.js",
+    "localization",
+    "l10n",
+    "unofficial"
+  ],
+  "author": "kadzany",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/apiksoft/l10n.js/issues"
+  },
+  "homepage": "https://github.com/apiksoft/l10n.js#readme"
+}
