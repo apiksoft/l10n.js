@@ -56,21 +56,24 @@
 			// sadly, this has to be non-blocking, thus does not allow for a graceful degrading API
 			req.open("GET", uri, TRUE);
 			req.timeout = 5000;
+			var thisData = data;
 			req.onload = function (e) {
 				if (req.readyState === 4) {
 					if (req.status === 200) {
-						console.log(req.responseText);
-						console.log(req.responseURL);
-						data = JSON.parse(req.responseText);
+						thisData = JSON.parse(req.responseText);
 					} else {
 						console.error(req.statusText);
 					}
 				}
 			};
+
+			setTimeout(function(){
+				console.log(data);
+				console.log(thisData);
+			}, req.timeout);
+
 			req.onerror = function (e) {
-				console.log(req);
-				console.log(req.responseText);
-				console.error(req.statusText);
+				console.error("Error for request " + uri + " (possibly cross-domain issue)" + req.statusText);
 			};
 			req.ontimeout = function () {
 				console.error("The request for " + uri + " timed out.");
