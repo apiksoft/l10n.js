@@ -61,7 +61,7 @@
 				req.onload = function (e) {
 					if (req.readyState === 4) {
 						if (req.status === 200) {
-							resolve(req.responseText);
+							resolve(JSON.parse(req.responseText));
 						} else {
 							reject(req.statusText);
 						}
@@ -71,7 +71,7 @@
 				req.onerror = function (e) {
 					reject("Error for request " + uri + " failed! (possibly cross-domain issue) " + req.statusText);
 				};
-				
+
 				req.ontimeout = function () {
 					reject("The request for " + uri + " timed out.");
 				};
